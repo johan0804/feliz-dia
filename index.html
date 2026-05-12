@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Para Mi Enfermera Favorita</title>
+
+<!-- =====================================================
+     FUENTES & LIBRERÍAS
+====================================================== -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- =====================================================
+     ★ PERSONALIZA AQUÍ ★
+     Reemplaza "[Nombre de tu novia]" por su nombre real.
+====================================================== -->
+<script>
+  const NOMBRE = "Pauleth"; // ← CAMBIA ESTO
+
+  // ★ IMÁGENES: Reemplaza las URLs por los links reales de tus fotos.
+  //   Si no tienes URL, deja el string vacío "" y aparecerá un ícono de corazón.
+  const FOTOS = [
+    {
+      url: "foto1.jpg",  // ← URL de la foto 1 (ej: "https://i.imgur.com/abc123.jpg")
+      descripcion: "El día que supe que eras mi lugar seguro"
+    },
+    {
+      url: "foto2.jpg",  // ← URL de la foto 2
+      descripcion: "Tu sonrisa despues de un dia de duro trabajo"
+    },
+    {
+      url: "foto3.jpg",  // ← URL de la foto 3
+      descripcion: "Cuando cuidas, el mundo se detiene a mirarte"
+    },
+    {
+      url: "foto4.jpg",  // ← URL de la foto 4
+      descripcion: "Mi enfermera, mi compañera, mi todo"
+    },
+    {
+      url: "foto6.jpg",  // ← URL de la foto 4
+      descripcion: "Mi niña, la mas hermosa"
+    },
+    {
+       url: "foto5.jpg",  // ← URL de la foto 4
+      descripcion: "La mujer mas fuerte que he conocido"
+    }
+  ];
+</script>
+
+<style>
+/* =====================================================
+   VARIABLES Y RESET
+====================================================== */
+:root {
+  --rosa:      #f9d4d4;
+  --rosa-med:  #f0a0b0;
+  --rosa-deep: #c0607a;
+  --crema:     #fff8f5;
+  --dorado:    #d4a76a;
+  --dorado-cl: #f5e6cb;
+  --celeste:   #daeef7;
+  --blanco:    #ffffff;
+  --texto:     #4a3040;
+  --texto-cl:  #8a6070;
+  --sombra:    rgba(180,100,120,0.18);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Lato',sans-serif;
+  background: var(--crema);
+  color: var(--texto);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* =====================================================
+   FONDO ANIMADO
+====================================================== */
+#particles { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+.petal {
+  position:absolute;
+  font-size:1.1rem;
+  animation: fall linear infinite;
+  opacity:0;
+  user-select:none;
+}
+@keyframes fall {
+  0%   { transform:translateY(-40px) rotate(0deg);   opacity:.7; }
+  80%  { opacity:.5; }
+  100% { transform:translateY(100vh) rotate(360deg); opacity:0; }
+}
+
+/* =====================================================
+   ENCABEZADO
+====================================================== */
+header {
+  position:relative; z-index:10;
+  text-align:center;
+  padding: 3.5rem 1.5rem 2rem;
+  background: linear-gradient(160deg, #fff0f5 0%, #fde8ef 50%, #f5f0ff 100%);
+  border-bottom: 1px solid var(--rosa);
+  overflow:hidden;
+}
+header::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(249,212,212,.5) 0%, transparent 70%);
+}
+.header-badge {
+  display:inline-block;
+  background: linear-gradient(135deg, var(--rosa-med), var(--dorado));
+  color:#fff;
+  font-family:'Lato',sans-serif;
+  font-size:.72rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:.35rem 1.2rem;
+  border-radius:50px;
+  margin-bottom:1.2rem;
+  box-shadow: 0 2px 12px var(--sombra);
+}
+header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3.6rem);
+  font-weight:300;
+  line-height:1.15;
+  color: var(--texto);
+  position:relative;
+}
+header h1 span.nombre {
+  font-style:italic;
+  color: var(--rosa-deep);
+  font-weight:600;
+}
+header h1 .corazon-h {
+  color: var(--rosa-deep);
+  animation: latido 1.4s ease-in-out infinite;
+  display:inline-block;
+}
+@keyframes latido {
+  0%,100% { transform:scale(1);   }
+  30%     { transform:scale(1.22); }
+  60%     { transform:scale(1.08); }
+}
+header p.subtitulo {
+  margin-top:.9rem;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color: var(--texto-cl);
+  font-weight:300;
+}
+.cruz-deco {
+  font-size:1.8rem;
+  color: var(--rosa-med);
+  margin-top:1.2rem;
+  opacity:.7;
+}
+
+/* =====================================================
+   NAVEGACIÓN / TABS
+====================================================== */
+nav {
+  position:sticky; top:0; z-index:100;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem;
+  background: rgba(255,248,245,.95);
+  backdrop-filter:blur(10px);
+  border-bottom: 1px solid var(--rosa);
+  padding:.75rem 1rem;
+  box-shadow: 0 2px 16px rgba(180,100,120,.1);
+}
+.tab-btn {
+  border:1.5px solid var(--rosa-med);
+  background:transparent;
+  color: var(--rosa-deep);
+  font-family:'Lato',sans-serif;
+  font-size:.82rem;
+  letter-spacing:.06em;
+  padding:.52rem 1.15rem;
+  border-radius:50px;
+  cursor:pointer;
+  transition: all .3s;
+}
+.tab-btn:hover { background: var(--rosa); border-color:var(--rosa-deep); }
+.tab-btn.activo {
+  background: linear-gradient(135deg,var(--rosa-deep),var(--rosa-med));
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 4px 16px var(--sombra);
+  transform:translateY(-1px);
+}
+.tab-btn i { margin-right:.4rem; }
+
+/* =====================================================
+   SECCIONES
+====================================================== */
+main { position:relative; z-index:5; }
+.seccion {
+  display:none;
+  padding:3rem 1.5rem 4rem;
+  max-width:900px;
+  margin:0 auto;
+  animation: fadeIn .6s ease both;
+}
+.seccion.visible { display:block; }
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* =====================================================
+   VISTA 1 – RECONOCIMIENTO
+====================================================== */
+.recon-hero {
+  text-align:center;
+  padding:2rem 0 2.5rem;
+}
+.icono-enfermera {
+  font-size:5rem;
+  background: linear-gradient(135deg,var(--rosa-deep),var(--dorado));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter: drop-shadow(0 4px 10px var(--sombra));
+  animation:brillo 2.5s ease-in-out infinite alternate;
+}
+@keyframes brillo {
+  from { filter:drop-shadow(0 4px 10px rgba(192,96,122,.3)); }
+  to   { filter:drop-shadow(0 4px 22px rgba(212,167,106,.7)); }
+}
+.recon-hero h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.7rem,4vw,2.6rem);
+  font-weight:300;
+  margin-top:1rem;
+  line-height:1.3;
+}
+.recon-hero h2 em { font-style:italic; color:var(--rosa-deep); }
+
+.corazones-flotantes {
+  position:relative;
+  height:60px;
+  margin:1rem 0;
+  overflow:hidden;
+}
+.corazon-fly {
+  position:absolute;
+  font-size:1.4rem;
+  animation: volar 3s ease-in-out infinite;
+  opacity:0;
+}
+@keyframes volar {
+  0%   { transform:translateY(40px) scale(.5); opacity:0; }
+  30%  { opacity:1; }
+  100% { transform:translateY(-60px) scale(1.1); opacity:0; }
+}
+
+.tarjeta-recon {
+  background: linear-gradient(135deg, #fff0f5 0%, #fef8f0 100%);
+  border:1.5px solid var(--rosa);
+  border-radius:20px;
+  padding:2rem 2.2rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 6px 30px var(--sombra);
+  display:flex; gap:1.4rem; align-items:flex-start;
+}
+.tarjeta-recon .ico {
+  font-size:2.2rem;
+  flex-shrink:0;
+  margin-top:.1rem;
+}
+.tarjeta-recon h3 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;
+  font-weight:600;
+  margin-bottom:.5rem;
+  color:var(--rosa-deep);
+}
+.tarjeta-recon p {
+  font-size:.97rem;
+  line-height:1.75;
+  color:var(--texto-cl);
+}
+.frase-central {
+  text-align:center;
+  margin:2.5rem 0;
+  padding:2rem;
+  background: linear-gradient(135deg,var(--dorado-cl),var(--rosa));
+  border-radius:20px;
+  border:1px solid var(--dorado);
+}
+.frase-central p {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1.2rem,3vw,1.6rem);
+  color:var(--texto);
+  line-height:1.6;
+}
+.frase-central p span { color:var(--rosa-deep); font-weight:600; }
+
+/* =====================================================
+   VISTA 2 – CARTA
+====================================================== */
+.carta-wrap {
+  perspective:1200px;
+  padding:1rem 0;
+}
+.carta {
+  background: #fffdf9;
+  border-radius:12px;
+  box-shadow: 0 10px 50px rgba(180,100,120,.2), 0 2px 8px rgba(0,0,0,.06);
+  padding:3rem 3.2rem 3.5rem;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(212,167,106,.25);
+  transition:transform .4s;
+}
+.carta:hover { transform:rotateY(-1.5deg) scale(1.005); }
+.carta::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:6px;
+  background:linear-gradient(90deg, var(--rosa-deep),var(--dorado),var(--rosa-deep));
+}
+/* Textura sutil */
+.carta::after {
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(transparent, transparent 28px, rgba(212,167,106,.07) 28px, rgba(212,167,106,.07) 29px);
+  pointer-events:none;
+}
+.carta-flor {
+  text-align:right;
+  font-size:2.8rem;
+  line-height:1;
+  margin-bottom:.5rem;
+  filter:drop-shadow(0 2px 6px rgba(212,167,106,.4));
+}
+.carta-fecha {
+  font-family:'Lato',sans-serif;
+  font-size:.82rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--dorado);
+  margin-bottom:1.8rem;
+}
+.carta h2 {
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.8rem,4vw,2.5rem);
+  color:var(--rosa-deep);
+  margin-bottom:1.4rem;
+}
+.carta-cuerpo p {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.07rem;
+  line-height:2;
+  color:var(--texto);
+  margin-bottom:1.2rem;
+  text-align:justify;
+}
+.carta-cuerpo p em { font-style:italic; color:var(--rosa-deep); }
+.firma-wrap {
+  margin-top:2.5rem;
+  text-align:right;
+}
+.firma-wrap p.cierre {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.05rem;
+  color:var(--texto-cl);
+  margin-bottom:.5rem;
+}
+.firma-wrap .firma {
+  font-family:'Dancing Script',cursive;
+  font-size:2rem;
+  color:var(--rosa-deep);
+  filter:drop-shadow(0 1px 3px rgba(192,96,122,.3));
+}
+.sello {
+  position:absolute;
+  bottom:2rem; left:2.5rem;
+  font-size:3.5rem;
+  opacity:.18;
+  transform:rotate(-15deg);
+}
+
+/* =====================================================
+   VISTA 3 – GALERÍA
+====================================================== */
+.galeria-titulo {
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,4vw,2.3rem);
+  font-weight:300;
+  margin-bottom:.5rem;
+}
+.galeria-sub {
+  text-align:center;
+  font-style:italic;
+  color:var(--texto-cl);
+  margin-bottom:2.5rem;
+  font-size:.95rem;
+}
+.galeria-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:1.5rem;
+}
+.foto-card {
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 6px 28px var(--sombra);
+  background:#fff0f5;
+  border:2px solid var(--rosa);
+  transition:transform .35s, box-shadow .35s;
+  cursor:pointer;
+}
+.foto-card:hover {
+  transform:scale(1.04) translateY(-4px);
+  box-shadow:0 14px 40px rgba(180,100,120,.3);
+}
+.foto-card .img-wrap {
+  width:100%; height:200px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(135deg,var(--rosa),var(--dorado-cl));
+  display:flex; align-items:center; justify-content:center;
+}
+.foto-card .img-wrap img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform .5s;
+}
+.foto-card:hover .img-wrap img { transform:scale(1.1); }
+.foto-card .img-wrap .placeholder-ico {
+  font-size:3.5rem;
+  color:var(--rosa-deep);
+  opacity:.6;
+  text-align:center;
+}
+.foto-card .img-wrap .placeholder-ico p {
+  font-family:'Dancing Script',cursive;
+  font-size:1rem;
+  color:var(--rosa-deep);
+  margin-top:.4rem;
+}
+.foto-card .descripcion {
+  padding:1rem 1.1rem;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1rem;
+  color:var(--texto);
+  text-align:center;
+  line-height:1.5;
+  border-top:1px solid var(--rosa);
+}
+
+/* =====================================================
+   VISTA 4 – RAZONES
+====================================================== */
+.razones-titulo {
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,4vw,2.3rem);
+  font-weight:300;
+  margin-bottom:.4rem;
+}
+.razones-sub {
+  text-align:center;
+  font-style:italic;
+  color:var(--texto-cl);
+  margin-bottom:2.5rem;
+  font-size:.95rem;
+}
+.razones-lista { display:flex; flex-direction:column; gap:1rem; }
+.razon-item {
+  display:flex; gap:1.2rem; align-items:flex-start;
+  background:linear-gradient(135deg,#fff8fb,#fff3f0);
+  border-left:4px solid var(--rosa-deep);
+  border-radius:0 14px 14px 0;
+  padding:1.1rem 1.4rem;
+  box-shadow:0 3px 14px rgba(180,100,120,.1);
+  transition:transform .25s, box-shadow .25s;
+  animation: slideIn .5s ease both;
+}
+.razon-item:hover {
+  transform:translateX(6px);
+  box-shadow:0 6px 22px rgba(180,100,120,.2);
+}
+.razon-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;
+  font-weight:600;
+  color:var(--rosa-med);
+  line-height:1;
+  flex-shrink:0;
+  min-width:2rem;
+}
+.razon-ico {
+  font-size:1.5rem;
+  flex-shrink:0;
+  margin-top:.1rem;
+}
+.razon-txt h4 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--rosa-deep);
+  margin-bottom:.2rem;
+}
+.razon-txt p {
+  font-size:.93rem;
+  color:var(--texto-cl);
+  line-height:1.7;
+  font-style:italic;
+}
+@keyframes slideIn {
+  from { opacity:0; transform:translateX(-20px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+/* =====================================================
+   PIE DE PÁGINA
+====================================================== */
+footer {
+  position:relative; z-index:5;
+  text-align:center;
+  padding:3rem 1.5rem 2rem;
+  background:linear-gradient(0deg, #fff0f5 0%, transparent 100%);
+}
+.qr-wrap {
+  display:inline-block;
+  background:#fff;
+  border:2px solid var(--rosa);
+  border-radius:16px;
+  padding:1.2rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 6px 24px var(--sombra);
+}
+.qr-label {
+  font-family:'Dancing Script',cursive;
+  font-size:1.1rem;
+  color:var(--rosa-deep);
+  margin-bottom:.7rem;
+}
+#qr-code canvas, #qr-code img { border-radius:8px; }
+.mensaje-secreto {
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(1.1rem,3vw,1.5rem);
+  color:var(--rosa-deep);
+  margin-top:1.5rem;
+  opacity:.9;
+}
+.firma-footer {
+  font-family:'Dancing Script',cursive;
+  font-size:1.2rem;
+  color:var(--dorado);
+  margin-top:.4rem;
+}
+
+/* =====================================================
+   RESPONSIVE
+====================================================== */
+@media(max-width:600px){
+  .carta { padding:2rem 1.5rem 2.5rem; }
+  .tarjeta-recon { flex-direction:column; gap:.8rem; }
+  nav { gap:.35rem; }
+  .tab-btn { font-size:.75rem; padding:.45rem .9rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Partículas de fondo -->
+<div id="particles"></div>
+
+<!-- =====================================================
+     ENCABEZADO
+====================================================== -->
+<header>
+  <div class="header-badge"><i class="fas fa-heart"></i> &nbsp; Un regalo desde mi corazon &nbsp; <i class="fas fa-heart"></i></div>
+  <h1>
+    Feliz Día, <span class="nombre" id="h-nombre"></span>
+    <span class="corazon-h">🩷</span>
+    <br><small style="font-size:.55em;font-weight:300;color:var(--texto-cl);">Mi enfermera favorita</small>
+  </h1>
+  <p class="subtitulo">"Gracias por salvar vidas y por darme la tuya"</p>
+  <div class="cruz-deco">✦ <i class="fas fa-cross" style="font-size:1rem;"></i> ✦</div>
+</header>
+
+<!-- =====================================================
+     NAVEGACIÓN
+====================================================== -->
+<nav>
+  <button class="tab-btn activo" onclick="mostrar('reconocimiento',this)">
+    <i class="fas fa-star"></i>Reconocimiento
+  </button>
+  <button class="tab-btn" onclick="mostrar('carta',this)">
+    <i class="fas fa-envelope-open-text"></i>Carta de Amor
+  </button>
+  <button class="tab-btn" onclick="mostrar('galeria',this)">
+    <i class="fas fa-images"></i>Tus fortalezas
+  </button>
+  <button class="tab-btn" onclick="mostrar('razones',this)">
+    <i class="fas fa-heart"></i>Razones
+  </button>
+</nav>
+
+<main>
+
+<!-- =====================================================
+     SECCIÓN 1: RECONOCIMIENTO
+====================================================== -->
+<section id="reconocimiento" class="seccion visible">
+
+  <div class="recon-hero">
+    <div class="icono-enfermera"><i class="fas fa-user-nurse"></i></div>
+
+    <!-- Corazones animados -->
+    <div class="corazones-flotantes" id="corazones-hero"></div>
+
+    <h2>Para la mujer que cuida al mundo<br>y cuida <em>mi mundo</em></h2>
+  </div>
+
+  <div class="frase-central">
+    <p>"Gracias por cuidar de otros.<br>
+    <span>Hoy quiero cuidarte a ti.</span>"</p>
+  </div>
+
+  <div class="tarjeta-recon" style="animation-delay:.1s">
+    <div class="ico">🏥</div>
+    <div>
+      <h3>Tu vocacion es un don</h3>
+      <p>Hay personas que eligen una profesion. Tu elegiste una mision. Cada dia que te pones el uniforme, no solo vistes una tela — vistes compasion, valentia y amor el mundo es mejor lugar porque tu estas en el cuidando a quienes mas lo necesitan.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta-recon" style="animation-delay:.2s">
+    <div class="ico">🌙</div>
+    <div>
+      <h3>Tus dias Dificiles</h3>
+      <p>Se que llegas cansada a la casa con muchas cosas en la cabeza, pero sin importar tu cansancio me regalas tiempo para poder hablar un rato y eso me  encanta gracias por ser la mejor mujer de este mundo.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta-recon" style="animation-delay:.3s">
+    <div class="ico">💞</div>
+    <div>
+      <h3>Tu amor</h3>
+      <p>Se que sera un camino largo y que no tendras mucho tiempo, pero puedes contar conmigo estare a tu lado para amarte y apoyarte, y agradezco que me amas tanto y me hallas aceptado en tu vida te amo mi niña.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta-recon" style="animation-delay:.4s">
+    <div class="ico" style="color:var(--dorado)">✨</div>
+    <div>
+      <h3>Hoy te celebro a ti</h3>
+      <p>No solo el Día de la Enfermera, sino <em>todos</em> los dias. Porque en cada uno de ellos, tu decides ser extraordinaria, gracias por existir, gracias por ser mi compañera de vida y gracias, de corazon, por salvar vidas incluyendo la mia.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- =====================================================
+     SECCIÓN 2: CARTA DE AMOR
+====================================================== -->
+<section id="carta" class="seccion">
+  <div class="carta-wrap">
+    <div class="carta">
+      <div class="sello">🌸</div>
+      <div class="carta-flor">🌷</div>
+      <div class="carta-fecha" id="carta-fecha"></div>
+      <h2 id="carta-saludo"></h2>
+
+      <div class="carta-cuerpo">
+        <p>Hola señorita, buenos dias en este dia tan especial quiero sepas que estoy muy orgulloso de ti de lo que haces cada dia soy el hombre  mas feliz de poder decir que eres mi novia.</p>
+
+        <p>Mi niña<em> en lo poco que te llevo  conociendo se lo  mucho que haz luchado</em>. Tengo muchas ganas de apoyarte de crecer contigo, me encanta ver como ayudas a los demas y te preocupas por su bienestar, estare a tu lado viendo como cumples  tus sueños quiero ser partidario en tu vida.</p>
+
+        <p>He visto como tienes que solucionar y hacer todas las cosas que te piden que ahi dias en los que sigues de largo en el hospital donde te encuentras con desafios, pero sin importar, también he visto como aun asi me regalas <em>tu mejor sonrisa</em> cuando me miras.</p>
+
+        <p>Esa sonrisa, mi niña es lo que me levanta los dias malos, es mi medicina. Es mi recordatorio de que el mundo tiene cosas buenas y que tu eres la mas grande de ellas.</p>
+
+        <p>Gracias por elegirme, gracias por confiar en mi, gracias por dejarme ver a la mujer que hay detras del uniforme la que duda, la que llora, la que rie, la que me abraza sin avisar. <em>Esa tambien eres tu</em>, y esa es la que mas amo.</p>
+
+        <p>No tengo los meritos que tienes tu para hablar de vocacion, pero si tengo algo claro, mi vocacion eres tu, amarte es lo mas honesto que he hecho en la vida.</p>
+      </div>
+
+      <div class="firma-wrap">
+        <p class="cierre">Con todo mi amor, siempre —</p>
+        <div class="firma">Tu novio 🩷</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SECCIÓN 3: GALERÍA
+====================================================== -->
+<section id="galeria" class="seccion">
+  <h2 class="galeria-titulo">Nuestros Momentos</h2>
+  <p class="galeria-sub">Instantes que guardo en el corazon para siempre</p>
+  <div class="galeria-grid" id="galeria-grid"></div>
+</section>
+
+<!-- =====================================================
+     SECCIÓN 4: RAZONES
+====================================================== -->
+<section id="razones" class="seccion">
+  <h2 class="razones-titulo">Razones por las que te amo</h2>
+  <p class="razones-sub">…y por las que admiro profundamente lo que haces</p>
+  <div class="razones-lista">
+
+    <div class="razon-item" style="animation-delay:.05s">
+      <div class="razon-num">01</div>
+      <div class="razon-ico">🩺</div>
+      <div class="razon-txt">
+        <h4>Porque curas con las manos y sanas con la mirada</h4>
+        <p>Lo que haces en el trabajo es extraordinario, pero la manera en que me miras a mi  eso tambien tiene poderes curativos.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.1s">
+      <div class="razon-num">02</div>
+      <div class="razon-ico">❤️</div>
+      <div class="razon-txt">
+        <h4>Porque eliges quedarte cuando todo el mundo huye</h4>
+        <p>En los momentos mas difíciles de otros, tu apareces, y en los mios, tambien esa constancia es uno de los regalos mas grandes que has dado a mi vida.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.15s">
+      <div class="razon-num">03</div>
+      <div class="razon-ico">🌙</div>
+      <div class="razon-txt">
+        <h4>Porque tus dias de mucho trabajo me enseñaron lo que es Esperarte</h4>
+        <p>Esperarte me hizo entender cuanto te valoro, nadie me ha enseñado a apreciar el tiempo como tu, simplemente estando ocupada en algo que importa.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.2s">
+      <div class="razon-num">04</div>
+      <div class="razon-ico">😊</div>
+      <div class="razon-txt">
+        <h4>Por tu sonrisa despues de un dia pesado</h4>
+        <p>No se como lo haces, pero siempre tienes una sonrisa eso no es agotamiento, eso es caracter y es una de las cosas mas hermosas de ti.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.25s">
+      <div class="razon-num">05</div>
+      <div class="razon-ico">💪</div>
+      <div class="razon-txt">
+        <h4>Porque eres mas fuerte de lo que crees</h4>
+        <p>Enfrentas cosas que harian temblar a cualquiera, y aun asi regresas, te levantas y sigues, esa fortaleza me inspira todos los dias.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.3s">
+      <div class="razon-num">06</div>
+      <div class="razon-ico">✨</div>
+      <div class="razon-txt">
+        <h4>Por la manera en que hablas de tu carrera</h4>
+        <p>Cuando me cuentas de lo que haces, en tus ojos hay una alegría que no tiene precio, eso me dice exactamente quien eres alguien que ama lo que hace.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.35s">
+      <div class="razon-num">07</div>
+      <div class="razon-ico">🤝</div>
+      <div class="razon-txt">
+        <h4>Porque en el amor tambien eres enfermera</h4>
+        <p>Cuidas de mi con la misma dedicacion que a tus pacientes me escuchas, me consientes, me cuidas cuando estoy mal, que suerte tan grande la mia.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.4s">
+      <div class="razon-num">08</div>
+      <div class="razon-ico">🌷</div>
+      <div class="razon-txt">
+        <h4>Porque eres delicada y poderosa al mismo tiempo</h4>
+        <p>Hay una combinacion rarisima en ti la ternura de quien ama profundamente y la firmeza de quien sabe lo que vale esa dualidad me tiene perdidamente enamorado.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.45s">
+      <div class="razon-num">09</div>
+      <div class="razon-ico">🏠</div>
+      <div class="razon-txt">
+        <h4>Porque donde estas tu, es mi hogar</h4>
+        <p>No necesito un lugar especial para sentirme en casa olo te necesito a ti, estes de uniforme o en pijama, llegas y todo tiene sentido.</p>
+      </div>
+    </div>
+
+    <div class="razon-item" style="animation-delay:.5s">
+      <div class="razon-num">10</div>
+      <div class="razon-ico">💫</div>
+      <div class="razon-txt">
+        <h4>Porque me elegiste a mi</h4>
+        <p>Con todo lo que das al mundo, con todo lo que podrias elegir  me elegiste a mi ,No hay razon mas grande que esa te lo agradecere toda la vida.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- =====================================================
+     PIE DE PÁGINA + QR
+====================================================== -->
+<footer>
+  <p class="qr-label"><i class="fas fa-qrcode"></i> Escanea para guardar esta página</p>
+  <div class="qr-wrap">
+    <div id="qr-code"></div>
+  </div>
+  <p class="mensaje-secreto" id="footer-msg"></p>
+  <p class="firma-footer">– Tu novio 🌹</p>
+  <p style="margin-top:2rem;font-size:.78rem;color:var(--texto-cl);opacity:.6;font-style:italic;">Hecho con amor infinito ✦ Solo para ti</p>
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+<script>
+// ---- Insertar nombre ----
+document.querySelectorAll('#h-nombre, .nombre-dinamico').forEach(el => el.textContent = NOMBRE);
+document.getElementById('carta-saludo').textContent = `Mi ${NOMBRE} hermosa,`;
+document.getElementById('footer-msg').textContent = `Te amo más que a cualquier cosa, ${NOMBRE}.`;
+
+// ---- Fecha en la carta ----
+const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const hoy = new Date();
+document.getElementById('carta-fecha').textContent =
+  `${hoy.getDate()} de ${meses[hoy.getMonth()]} de ${hoy.getFullYear()}`;
+
+// ---- Galería ----
+const grid = document.getElementById('galeria-grid');
+FOTOS.forEach((foto, i) => {
+  const card = document.createElement('div');
+  card.className = 'foto-card';
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'img-wrap';
+
+  if (foto.url && foto.url.trim() !== '') {
+    const img = document.createElement('img');
+    img.src = foto.url;
+    img.alt = foto.descripcion;
+    img.loading = 'lazy';
+    imgWrap.appendChild(img);
+  } else {
+    // Placeholder con corazón
+    imgWrap.innerHTML = `
+      <div class="placeholder-ico">
+        <div>🩷</div>
+        <p>nuestra foto</p>
+      </div>`;
+  }
+
+  const desc = document.createElement('div');
+  desc.className = 'descripcion';
+  desc.textContent = foto.descripcion;
+
+  card.appendChild(imgWrap);
+  card.appendChild(desc);
+  grid.appendChild(card);
+});
+
+// ---- Navegación tabs ----
+function mostrar(id, btn) {
+  document.querySelectorAll('.seccion').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('visible');
+    // re-trigger animation
+    el.style.animation = 'none';
+    el.offsetHeight; // reflow
+    el.style.animation = '';
+  }
+  if (btn) btn.classList.add('activo');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ---- Partículas de fondo ----
+const container = document.getElementById('particles');
+const emojis = ['🌸','🌷','✨','💕','🩷','💗','🌺'];
+for (let i = 0; i < 22; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  p.style.left = Math.random() * 100 + 'vw';
+  p.style.animationDuration = (6 + Math.random() * 10) + 's';
+  p.style.animationDelay = (Math.random() * 10) + 's';
+  p.style.fontSize = (.7 + Math.random() * .9) + 'rem';
+  container.appendChild(p);
+}
+
+// ---- Corazones flotantes en hero ----
+const heroCorazones = document.getElementById('corazones-hero');
+['💕','💗','🩷','💖','✨'].forEach((emoji, i) => {
+  const c = document.createElement('div');
+  c.className = 'corazon-fly';
+  c.textContent = emoji;
+  c.style.left = (15 + i * 18) + '%';
+  c.style.animationDelay = (i * .6) + 's';
+  c.style.animationDuration = (2.5 + i * .4) + 's';
+  heroCorazones.appendChild(c);
+});
+
+// ---- QR Code ----
+try {
+  new QRCode(document.getElementById("qr-code"), {
+    text: window.location.href || "https://tu-pagina.html",
+    width: 160,
+    height: 160,
+    colorDark: "#c0607a",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+} catch(e) {
+  document.getElementById("qr-code").innerHTML =
+    '<p style="font-size:.85rem;color:#c0607a;padding:.5rem;">[QR disponible al abrir en el navegador]</p>';
+}
+</script>
+</body>
+</html>
